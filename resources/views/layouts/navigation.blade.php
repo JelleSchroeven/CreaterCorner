@@ -22,15 +22,23 @@
 
 
                     <!-- conditional knoppen -->
-                     @auth
+                    @auth
                         @if(auth()->user()->role === 'seller')
-                            <a href="{{ route('seller.shop', ['username' => auth()-> user() -> name]) }}" 
-                            class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
-                                My Shop
-                            </a>
+                            @if(auth()->user()->shop)
+                                <!-- Seller heeft shop, toon My Shop knop -->
+                                <a href="{{ route('seller.shop', auth()->user()->shop->slug) }}" 
+                                class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+                                    My Shop
+                                </a>
+                            @else
+                                <!-- Seller heeft nog geen shop, stuur naar create shop -->
+                                <a href="{{ route('shop.create') }}" 
+                                class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow">
+                                    Create Shop
+                                </a>
+                            @endif
                         @endif
                     @endauth
-
                 </div>
             </div>
 
