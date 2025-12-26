@@ -26,6 +26,13 @@
                                     Datum: {{ $event->start_date }} - {{ $event->end_date }}
                                 </p>
                                 <p class="text-gray-700">{{ $event->description }}</p>
+
+                                @auth 
+                                    @if(auth()->user()->is_admin)
+                                        <a href="{{ route('events.edit', $event->id) }}" 
+                                        class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded shadow mt-4">Bewerk</a>
+                                    @endif
+                                @endauth
                             </div>
                         @endforeach
                     </div>
