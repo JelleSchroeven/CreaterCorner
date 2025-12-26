@@ -8,6 +8,24 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                
+            @if(session('success'))
+                    <div class="mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <!-- Error message -->
+                @if($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 border border-red-300 text-red-800 rounded">
+                        <ul class="list-disc pl-5">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                
                 <form action="{{ route('events.update', $event->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
