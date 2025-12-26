@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('news_posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('content');
+            $table->string('image_path')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamp('publication_date')->nullable();
             $table->timestamps();
         });
     }
