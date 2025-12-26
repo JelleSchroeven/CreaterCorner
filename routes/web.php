@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsPostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('events/create', [EventController::class, 'create'])->name('events.createEvent');
     Route::post('events', [EventController::class, 'store'])->name('events.store');
 });
+
+// Seller dashboard 
+Route::middleware(['auth', 'seller'])->get('/my-shop', [SellerController::class, 'index'])->name('seller.dashboard');
+
+// Dynamische shop pagina per seller
+Route::middleware('auth')->get('/shop/{username}', [SellerController::class, 'show'])->name('seller.shop');
+
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');

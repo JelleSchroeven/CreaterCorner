@@ -19,6 +19,18 @@
                     <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
                         {{ __('Events') }}
                     </x-nav-link>
+
+
+                    <!-- conditional knoppen -->
+                     @auth
+                        @if(auth()->user()->role === 'seller')
+                            <a href="{{ route('seller.shop', ['username' => auth()-> user() -> name]) }}" 
+                            class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+                                My Shop
+                            </a>
+                        @endif
+                    @endauth
+
                 </div>
             </div>
 
