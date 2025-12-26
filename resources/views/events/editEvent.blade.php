@@ -41,10 +41,25 @@
                         <textarea id="description" name="description" class="block mt-1 w-full border-gray-300 rounded">{{ old('description', $event->description) }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
-
-                    <x-primary-button>
+                    <div class ="flex items-center justify-between ">
+                        <x-primary-button>
                         {{ __('Update Event') }}
-                    </x-primary-button>
+                        </x-primary-button>
+
+                        <!-- Cancel Button -->
+                        <a href="{{ route('events.index') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow">
+                            {{ __('Cancel') }}
+                        </a>
+                    </div>
+                </form>
+                <br>
+                <!-- delete button -->
+                <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                    @csrf
+                    @method('DELETE')
+                    <x-danger-button type="submit">
+                        {{ __('Delete Event') }}
+                    </x-danger-button>
                 </form>
             </div>
         </div>
