@@ -18,14 +18,17 @@
                 @if($events->isEmpty())
                     <p>No events found.</p>
                 @else
-                    <ul>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($events as $event)
-                            <li>
-                                <strong>{{ $event->name }}</strong> - {{ $event->start_date }} to {{ $event->end_date }}
-                                <p>{{ $event->description }}</p>
-                            </li>
+                            <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+                                <h3 class="text-lg font-semibold mb-2">{{ $event->name }}</h3>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Datum: {{ $event->start_date }} - {{ $event->end_date }}
+                                </p>
+                                <p class="text-gray-700">{{ $event->description }}</p>
+                            </div>
                         @endforeach
-                    </ul>
+                    </div>
                 @endif
             </div>
         </div>
