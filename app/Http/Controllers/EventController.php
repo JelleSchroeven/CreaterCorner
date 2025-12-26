@@ -61,9 +61,9 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Event $event)
     {
-        //
+        return view('events.editEvent', compact('event'));
     }
 
     /**
@@ -71,7 +71,24 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'description' => 'nullable|string',
+        ]);
+
+        $event = Event::findOrFail($id);
+        $event->name = $request->input('name');
+        $event->location = $request->input('location');
+        $event->start_date = $request->input('start_date');
+        $event->end_date = $request->input('end_date');
+        $event->description = $request->input('description');
+        
+        $event->save();
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
