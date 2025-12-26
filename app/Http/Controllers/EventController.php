@@ -29,7 +29,25 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'description' => 'nullable|string',
+        ]);
+
+        $event = new Event();
+        $event->name = $request->input('name');
+        $event->location = $request->input('location');
+        $event->start_date = $request->input('start_date');
+        $event->end_date = $request->input('end_date');
+        $event->description = $request->input('description');
+        $event->user_id = auth()->id(); // aangemaakt door admin id
+        
+        $event->save();
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**
