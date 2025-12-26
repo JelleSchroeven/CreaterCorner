@@ -25,6 +25,8 @@
                                 <p class="text-sm text-gray-500 mb-2">
                                     Datum: {{ $event->start_date }} - {{ $event->end_date }}
                                 </p>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Locatie: {{ $event->location }}
                                 <p class="text-gray-700">{{ $event->description }}</p>
 
                                 @auth 
