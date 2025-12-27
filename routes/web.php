@@ -15,7 +15,7 @@ use App\Http\Controllers\FollowController;
 /*
 | Public Routes (No Login Required)
 */
-Route::get('/', function () { return view('welcome'); })->name('home');
+Route::get('/', function () { return view('dashboard'); })->name('home');
 
 Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
@@ -44,9 +44,6 @@ Route::prefix('cart')->group(function () {
 | Authenticated Routes (Login Required)
 */
 Route::middleware('auth')->group(function () {
-
-    // Dashboard
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
 
     // User profile management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,17 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Welkom bij CreaterCorner</h1>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+        @auth
+            <p>Hallo {{ auth()->user()->name }}, hier is jouw dashboard overzicht.</p>
+            <!-- eventueel kort overzicht van shop, orders, etc -->
+        @else
+            <p>Bekijk onze shops en producten, of registreer je om een eigen shop te starten!</p>
+        @endauth
     </div>
 </x-app-layout>
+        
