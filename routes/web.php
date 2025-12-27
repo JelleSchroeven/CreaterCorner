@@ -61,8 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
 });
 
-
-
+Route::middleware('auth')->group(function () {
+    Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
+});
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');
