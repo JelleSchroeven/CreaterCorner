@@ -28,6 +28,9 @@
                         {{ __('FAQ') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
 
 
 
@@ -136,6 +139,12 @@
             <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
                 {{ __('FAQ') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
+
+
 
             <!-- Conditional knoppen voor sellers -->
             @auth
