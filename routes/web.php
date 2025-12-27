@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PublicProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,8 +24,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Publiek profiel van een gebruiker
-Route::get('/users/{user}', [PublicProfileController::class, 'show'])->name('users.show');
+// Publiek profiel
+Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
+
+// Eigen profiel aanpassen (auth nodig)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/edit', [PublicProfileController::class, 'edit'])->name('profile.edit.public');
+    Route::patch('/profile/update', [PublicProfileController::class, 'update'])->name('profile.update.public');
+});
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('events/create', [EventController::class, 'create'])->name('events.createEvent');
