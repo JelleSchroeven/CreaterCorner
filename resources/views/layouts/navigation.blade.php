@@ -78,6 +78,7 @@
 
                 
                 @auth
+                <!-- dropdown ingelogde gebruiker -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -107,6 +108,17 @@
                         </x-slot>
                     </x-dropdown>
                 @endauth
+                <!-- login/registreren gasten -->
+                @guest
+                    <div class="space-x-4">
+                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                            {{ __('Login') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+                    </div>
+                @endguest
             </div>
 
             <!-- Hamburger -->
