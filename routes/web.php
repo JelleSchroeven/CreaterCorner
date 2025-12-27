@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\FaqController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -75,6 +76,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
 });
 
+//FAQS
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 
 
