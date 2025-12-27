@@ -1,92 +1,100 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-//Controllers
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\NewsPostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FollowController;
 
-Route::get('/', function () {
-    return view('welcome');
+/*
+| Public Routes (No Login Required)
+*/
+Route::get('/', function () { return view('welcome'); })->name('home');
+
+Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
+Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
+
+Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
+
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+// Public events listing
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+/*-
+| Cart Routes (Guests & Auth Users)
+*/
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/{id}', [CartController::class, 'remove'])->name('cart.remove');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+/*
+| Authenticated Routes (Login Required)
+*/
 Route::middleware('auth')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+
+    // User profile management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-// Publiek profiel
-Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
-
-// Eigen profiel aanpassen (auth nodig)
-Route::middleware('auth')->group(function () {
+    //public profile management
     Route::get('/profile/edit', [PublicProfileController::class, 'edit'])->name('profile.edit.public');
     Route::patch('/profile/update', [PublicProfileController::class, 'update'])->name('profile.update.public');
+
+    // Follow/unfollow users
+    Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
 });
 
-
-Route::middleware(['auth', 'admin'])->group(function () {
+/*
+| Admin Routes
+*/
+Route::middleware(['auth','admin'])->group(function() {
     Route::get('events/create', [EventController::class, 'create'])->name('events.createEvent');
     Route::post('events', [EventController::class, 'store'])->name('events.store');
 });
 
-Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function () {
+/*
+| Seller Routes
+*/
+Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function() {
+
+    // Shop management
     Route::get('/shop/create', [ShopController::class, 'create'])->name('shop.create');
     Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
     Route::get('/shop/{slug}/edit', [ShopController::class, 'edit'])->name('shop.edit');
     Route::patch('/shop/{slug}', [ShopController::class, 'update'])->name('shop.update');
-});
 
-// Dynamische shop pagina per seller
-Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
-
-// Alle shops overzicht
-Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
-
-//producten
-Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function () {
+    // Product management
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/my-products', [App\Http\Controllers\ProductController::class, 'editIndex'])->name('products.my');
+    Route::get('/my-products', [ProductController::class, 'editIndex'])->name('products.my');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 });
 
-//winkelcar
+/*
+| Resource Routes (Auth Protected)
+*/
 Route::middleware('auth')->group(function () {
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-  
-    Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::resource('news-posts', NewsPostController::class);
+    Route::resource('events', EventController::class);
+    Route::resource('products', ProductController::class);
 });
-
-Route::middleware('auth')->group(function () {
-    Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
-});
-
-//FAQS
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-
-//Contact
-Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
-
-
-Route::resource('news-posts', NewsPostController::class)->middleware('auth');
-Route::resource('events', EventController::class)->middleware('auth');
-Route::resource('products', ProductController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';
