@@ -21,8 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
+
+// Publiek profiel van een gebruiker
+Route::get('/users/{user}', [PublicProfileController::class, 'show'])->name('users.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('events/create', [EventController::class, 'create'])->name('events.createEvent');
@@ -64,6 +66,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
 });
+
+
+
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');
