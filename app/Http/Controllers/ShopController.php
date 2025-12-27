@@ -81,4 +81,11 @@ class ShopController extends Controller
         $products = $shop->products;
         return view('shop.shop', compact('shop','products'));
     }
+
+    public function index()
+    {
+        $shops = \App\Models\Shop::all();
+        return view('shop.index', compact('shops'));
+    }
+
 }

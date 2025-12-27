@@ -38,6 +38,9 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
 // Dynamische shop pagina per seller
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 
+// Alle shops overzicht
+Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
+
 //producten
 Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function () {
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');

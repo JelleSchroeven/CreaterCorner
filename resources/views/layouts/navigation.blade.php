@@ -20,6 +20,11 @@
                         {{ __('Events') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('shops.index')" :active="request()->routeIs('shops.index')">
+                        {{ __('Shops') }}
+                    </x-nav-link>
+
+
 
                     <!-- conditional knoppen -->
                     @auth
