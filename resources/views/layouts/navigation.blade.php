@@ -24,6 +24,11 @@
                         {{ __('Shops') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+                        {{ __('FAQ') }}
+                    </x-nav-link>
+
+
 
 
                     <!-- conditional knoppen -->
@@ -119,6 +124,33 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
+                {{ __('Events') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('shops.index')" :active="request()->routeIs('shops.index')">
+                {{ __('Shops') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+                {{ __('FAQ') }}
+            </x-responsive-nav-link>
+
+            <!-- Conditional knoppen voor sellers -->
+            @auth
+                @if(auth()->user()->role === 'seller')
+                    @if(auth()->user()->shop)
+                        <x-responsive-nav-link :href="route('shop.show', auth()->user()->shop->slug)">
+                            {{ __('My Shop') }}
+                        </x-responsive-nav-link>
+                    @else
+                        <x-responsive-nav-link :href="route('shop.create')">
+                            {{ __('Create Shop') }}
+                        </x-responsive-nav-link>
+                    @endif
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
