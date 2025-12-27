@@ -36,7 +36,7 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
 });
 
 // Dynamische shop pagina per seller
-Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('seller.shop');
+Route::get('/shop/{shop}', [ShopController::class, 'show'])->name('seller.shop');
 
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');

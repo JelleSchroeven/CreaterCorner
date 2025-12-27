@@ -26,8 +26,8 @@
                         </ul>
                     </div>
                 @endif
-
-                <form action="{{ route('shop.update', $shop->id) }}" method="POST" enctype="multipart/form-data">
+                
+                <form action="{{ route('shop.update', $shop) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
@@ -60,7 +60,7 @@
                             {{ __('Update Shop') }}
                         </x-primary-button>
 
-                        <a href="{{ route('seller.shop', $shop->owner->name) }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow">
+                        <a href="{{ route('seller.shop', $shop) }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow">
                             {{ __('Cancel') }}
                         </a>
                     </div>

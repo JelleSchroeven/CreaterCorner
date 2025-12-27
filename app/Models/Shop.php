@@ -25,4 +25,9 @@ class Shop extends Model
     {
         return $this->hasMany(\App\Models\Product::class, 'user_id', 'user_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

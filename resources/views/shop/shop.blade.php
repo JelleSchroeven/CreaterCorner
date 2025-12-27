@@ -20,7 +20,7 @@
                 <!-- Edit Shop knop als eigenaar -->
                 @auth
                     @if(auth()->id() === $shop->user_id)
-                        <a href="{{ route('shop.edit', $shop->id) }}" class="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-10">
+                        <a href="{{ route('shop.edit', $shop) }}" class="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-10">
                             Edit Shop
                         </a>
                     @endif

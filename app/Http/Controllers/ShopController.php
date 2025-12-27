@@ -41,7 +41,7 @@ class ShopController extends Controller
     // Bewerk shop
     public function edit(Shop $shop)
     {
-        $this->authorize('update', $shop); // enkel eigenaar kan
+        abort_if(auth()->id() !== $shop->user_id, 403);
         return view('shop.edit', compact('shop'));
     }
 
