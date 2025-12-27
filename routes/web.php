@@ -38,6 +38,14 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
 // Dynamische shop pagina per seller
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 
+//producten
+Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function () {
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/my-products', [App\Http\Controllers\ProductController::class, 'editIndex'])->name('products.my');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+});
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');

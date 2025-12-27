@@ -24,7 +24,7 @@ class Shop extends Model
 
     public function products()
     {
-        return $this->hasMany(\App\Models\Product::class, 'user_id', 'user_id');
+        return $this->hasMany(\App\Models\Product::class, 'shop_id', 'id');
     }
 
     public function getRouteKeyName()

@@ -37,13 +37,42 @@
                 <div>
                     <h3 class="font-bold" >Products</h3>
                 </div>
+                @auth
+                    @if(auth()->id() === $shop->user_id)
+                        <a href="{{ route('products.my') }}" 
+                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                            Edit Products
+                        </a>
+                    @endif
+                @endauth
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    @forelse($products as $product)
-                        <div class="border rounded p-3">{{ $product->name }}</div>
+                @forelse($shop->products as $product)
+                    <div class="bg-white shadow rounded-lg p-4 flex flex-col h-96">
+                        <!-- Product afbeelding -->
+                        @if($product->image_path)
+                            <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="h-40 w-full object-cover mb-4 rounded">
+                        @endif
+
+                        <!-- Product naam -->
+                        <h3 class="font-bold text-lg mb-2 truncate">{{ $product->name }}</h3>
+
+                        <!-- Beschrijving -->
+                        <p class="text-gray-600 mb-2 flex-1">{{ $product->description }}</p>
+
+                        <!-- Prijs -->
+                        <span class="font-semibold mb-2">€{{ number_format($product->price, 2) }}</span>
+
+                        <!-- Add to cart knop -->
+                        <button class="mt-auto bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Add to Cart
+                        </button>
+                    </div>
                     @empty
-                        <p class="text-sm text-gray-500">No products yet.</p>
-                    @endforelse
-                </div>
+                    <p>Geen producten beschikbaar.</p>
+                @endforelse
+            </div>
+
             </div>
             
 
