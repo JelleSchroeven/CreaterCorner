@@ -1,6 +1,4 @@
-Hier is de volledige `README.md` als kant-en-klare tekst die je direct kunt kopiëren en plakken:
 
-````markdown
 # Laravel Project 1 - Dynamische Website
 
 ## Inleiding
