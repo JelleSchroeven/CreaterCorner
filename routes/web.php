@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -79,6 +80,9 @@ Route::middleware('auth')->group(function () {
 //FAQS
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
+//Contact
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
