@@ -29,17 +29,17 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:50|unique:users,username,' . auth()->id(),
-            'bio' => 'nullable|string|max:500',
-            'profile_photo_path' => 'nullable|image|max:2048',
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|max:255',
+            'username' => 'sometimes|string|max:50|unique:users,username,' . auth()->id(),
+            'bio' => 'sometimes|nullable|string|max:500',
+            'birthday' => 'sometimes|nullable|date',
+            'profile_photo_path' => 'sometimes|nullable|image|max:2048',
         ]);
 
         $user = auth()->user();
-
-        $user->username = $request->username;
-        $user->birthday = $request->birthday;
-        $user->bio = $request->bio;
-
+        $user->fill($request->only(['name','email','username','bio','birthday']));
+       
         if ($request->hasFile('profile_photo_path')) {
             if ($user->profile_photo_path) {
                 Storage::disk('public')->delete($user->profile_photo_path);
