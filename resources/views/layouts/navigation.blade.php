@@ -26,7 +26,7 @@
                         @if(auth()->user()->role === 'seller')
                             @if(auth()->user()->shop)
                                 <!-- Seller heeft shop, toon My Shop knop -->
-                                <a href="{{ route('seller.shop', auth()->user()->shop->slug) }}" 
+                                <a href="{{ route('shop.show', auth()->user()->shop->slug) }}" 
                                 class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
                                     My Shop
                                 </a>

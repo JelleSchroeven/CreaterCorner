@@ -35,20 +35,22 @@ class ShopController extends Controller
 
         $shop->save();
 
-        return redirect()->route('seller.shop', $shop->slug)->with('success', 'Shop succesvol aangemaakt!');
+        return redirect()->route('shop.show', $shop->slug)->with('success', 'Shop succesvol aangemaakt!');
     }
 
     // Bewerk shop
-    public function edit(Shop $shop)
+    public function edit($slug)
     {
+        $shop = Shop::where('slug', $slug)->firstOrFail();
         abort_if(auth()->id() !== $shop->user_id, 403);
         return view('shop.edit', compact('shop'));
     }
 
     // Update shop
-    public function update(Request $request, Shop $shop)
+    public function update(Request $request, $slug)
     {
-        $this->authorize('update', $shop);
+        $shop = Shop::where('slug',$slug)->firstOrFail();
+        abort_if(auth()->id() !== $shop->user_id, 403);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -65,16 +67,13 @@ class ShopController extends Controller
         }
 
         $shop->save();
-
-        return redirect()->route('seller.shop', $shop->slug)->with('success', 'Shop bijgewerkt!');
+        return redirect()->route('shop.show', $shop->slug)->with('success', 'Shop bijgewerkt!');
     }
 
     public function show($slug)
     {
-        $shop = \App\Models\Shop::where('slug', $slug)->firstOrFail();
-        $user = $shop->user;
-        $products = $shop->products ?? collect();
-
-        return view('shop.shop', compact('user', 'shop', 'products'));
+        $shop = Shop::with('user', 'products')->where('slug', $slug)->firstOrFail();
+        $products = $shop->products;
+        return view('shop.shop', compact('shop','products'));
     }
 }

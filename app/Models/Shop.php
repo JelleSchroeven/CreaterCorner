@@ -14,11 +14,12 @@ class Shop extends Model
         'name',
         'description',
         'banner_image',
+        'slug',
     ];
 
-    public function owner()
+    public function user()
     {
-        return $this->belongsTo(user::class, 'user_is');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function products()
