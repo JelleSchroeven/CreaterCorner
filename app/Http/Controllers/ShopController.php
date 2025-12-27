@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class ShopController extends Controller
 {
@@ -63,7 +65,10 @@ class ShopController extends Controller
         $shop->description = $request->description;
 
         if ($request->hasFile('banner_image')) {
-            $shop->banner_image = $request->file('banner_image')->store('shops', 'public');
+        if ($shop->banner_image) {
+            Storage::disk('public')->delete($shop->banner_image);
+        }
+        $shop->banner_image = $request->file('banner_image')->store('shops', 'public');
         }
 
         $shop->save();

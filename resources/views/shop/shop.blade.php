@@ -9,7 +9,7 @@
             <!-- Shop Banner als achtergrond -->
             <div class="w-full h-48 rounded-lg mb-6 bg-gray-200 relative overflow-hidden">
                 @if(!empty($shop->banner_image))
-                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $user->shop->banner_image) }}');"></div>
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $shop->banner_image) }}');"></div>
                     <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- donker overlay voor contrast -->
                 @endif
 
