@@ -29,6 +29,7 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 
 // Public events listing
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 /*-
 | Cart Routes (Guests & Auth Users)
@@ -52,7 +53,7 @@ Route::middleware('auth')->group(function () {
 
     //public profile management
     Route::get('/profile/edit', [PublicProfileController::class, 'edit'])->name('profile.edit.public');
-    Route::patch('/profile/update', [PublicProfileController::class, 'update'])->name('profile.update.public');
+    Route::patch('/profile/update', [PublicProfileController::class, 'update'])->name('profile.update.public'); 
 
     // Follow/unfollow users
     Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
@@ -62,8 +63,11 @@ Route::middleware('auth')->group(function () {
 | Admin Routes
 */
 Route::middleware(['auth','admin'])->group(function() {
-    Route::get('events/create', [EventController::class, 'create'])->name('events.createEvent');
-    Route::post('events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
 });
 
 /*
@@ -90,7 +94,6 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
 */
 Route::middleware('auth')->group(function () {
     Route::resource('news-posts', NewsPostController::class);
-    Route::resource('events', EventController::class);
     Route::resource('products', ProductController::class);
 });
 
