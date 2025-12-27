@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsPostController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,6 +50,19 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 });
+
+//winkelcar
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+  
+    Route::patch('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+});
+
+
+
 
 Route::resource('news-posts', NewsPostController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');

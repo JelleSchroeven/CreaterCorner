@@ -64,9 +64,12 @@
                         <span class="font-semibold mb-2">€{{ number_format($product->price, 2) }}</span>
 
                         <!-- Add to cart knop -->
-                        <button class="mt-auto bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                            Add to Cart
-                        </button>
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">
+                                Add to Cart
+                            </button>
+                        </form>
                     </div>
                     @empty
                     <p>Geen producten beschikbaar.</p>
