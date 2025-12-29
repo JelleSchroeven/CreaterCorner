@@ -6,13 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+
+class IsAdmin
 {
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
 
-        if (!$user || $user->role !== 'admin' || !user->isadmin) {
+        if (!$user || $user->role !== 'admin' || !$user->is_admin) {
             abort(403, 'Unauthorized');
         }
 
