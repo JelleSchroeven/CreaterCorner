@@ -48,6 +48,7 @@ class UserController extends Controller
             'email' => $request->email,
             'role' => $request->role,
             'password' => bcrypt($request->password),
+            'is_admin'=> $request->role === 'admin',
         ]);
 
         return redirect()->route('admin.userManagement.index')->with('success', 'User created successfully.');

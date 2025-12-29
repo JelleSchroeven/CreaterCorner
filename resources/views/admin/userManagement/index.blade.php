@@ -88,6 +88,11 @@
                                 <label class="block text-sm">Password</label>
                                 <input class="w-full border rounded p-2" type="password" name="password" required>
                             </div>
+                    
+                            <div>
+                                <label class="block text-sm">Confirm Password</label>
+                                <input class="w-full border rounded p-2" type="password" name="password_confirmation" required>
+                            </div>
 
                             <div class="flex justify-end gap-3 pt-4">
                                 <button type="button" @click="open = false" class="px-4 py-2 bg-gray-200 rounded">
