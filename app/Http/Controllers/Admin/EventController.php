@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Event;
+
 
 class EventController extends Controller
 {
@@ -13,7 +15,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all(); // haalt alle events op uit de database
-        return view('events.index', compact('events'));
+        return view('admin.events.index', compact('events'));
     }
 
     /**
@@ -21,7 +23,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('events.createEvent');
+        return view('admin.events.create');
     }
 
     /**
@@ -48,7 +50,7 @@ class EventController extends Controller
         $event->save();
 
         return redirect()
-            ->route('events.index')
+            ->route('admin.events.index')
             ->with('success', 'Event created successfully.');
     }
 
@@ -65,7 +67,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        return view('events.editEvent', compact('event'));
+        return view('admin.events.edit', compact('event'));
     }
 
     /**
@@ -91,7 +93,7 @@ class EventController extends Controller
         $event->save();
 
         return redirect()
-            ->route('events.index')
+            ->route('admin.events.index')
             ->with('success', 'Event updated successfully.');
     }
 
@@ -102,7 +104,7 @@ class EventController extends Controller
     {
         $event->delete();
         return redirect()
-            ->route('events.index')
+            ->route('admin.events.index')
             ->with('success', 'Event deleted successfully.');
     }
 }

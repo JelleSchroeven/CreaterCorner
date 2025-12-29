@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all(); // Of paginate() voor pagina's
-        return view('admin.users.index', compact('users'));
+        return view('admin.userManagement.index', compact('users'));
     }
 
     /**
