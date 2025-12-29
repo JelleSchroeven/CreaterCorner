@@ -25,10 +25,6 @@
                     <p class="text-2xl font-bold">{{ $eventCount }}</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-gray-500 font-semibold">Contact Messages</h3>
-                    <p class="text-2xl font-bold">{{ $contactCount }}</p>
-                </div>
             </div>
 
             {{-- Functionaliteiten Buttons --}}

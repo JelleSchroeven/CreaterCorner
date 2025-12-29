@@ -16,7 +16,7 @@ class AdminDashboardController extends Controller
             'userCount' => User::count(),
             'shopCount' => Shop::count(),
             'eventCount' => Event::count(),
-            'contactCount' => Contact::count(),
+            
         ]);
     }
 }
