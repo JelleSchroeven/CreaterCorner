@@ -32,6 +32,14 @@
                         {{ __('Contact') }}
                     </x-nav-link>
 
+                    @auth
+                        @if(auth()->user()->is_admin)
+                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Admin Dashboard') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+
 
 
                     <!-- conditional knoppen -->
@@ -155,6 +163,14 @@
             <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                 {{ __('Contact') }}
             </x-responsive-nav-link>
+
+            @auth
+                @if(auth()->user()->is_admin)
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-nav-link>
+                @endif
+            @endauth
 
 
 
