@@ -57,17 +57,27 @@ class UserController extends Controller
      * Update een gebruiker in de database
      */
     public function update(Request $request, User $user)
-    {
+    {   
+        $user = User::findOrFail($request->user_id);
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'role' => 'required|string|in:user,admin', // Of andere rollen
+            'role' => 'required|string|in:user,seller,moderator,admin',
+            'password'=> 'nullable|string|min:6|confirmed',
         ]);
 
-        $user->update($request->only(['name', 'email', 'role']));
+        $data = $request->only(['name', 'email', 'role']);
+
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+        $data['is_admin'] = $request->role === 'admin';
+
+        $user->update($data);
 
         return redirect()->route('admin.userManagement.index')->with('success', 'User updated successfully.');
     }
+
 
     /**
      * Verwijder een gebruiker
