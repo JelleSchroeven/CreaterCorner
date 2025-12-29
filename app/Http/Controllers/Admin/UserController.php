@@ -33,6 +33,25 @@ class UserController extends Controller
         return view('admin.userManagement.edit', compact('user'));
     
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|string|in:user,seller,moderator,admin',
+            'password' => 'required|string|min:6|confirmed', // als je password confirmation gebruikt
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('admin.userManagement.index')->with('success', 'User created successfully.');
+    }
     /**
      * Update een gebruiker in de database
      */
