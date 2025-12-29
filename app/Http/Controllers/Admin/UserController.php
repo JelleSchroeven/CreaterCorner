@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.users.show', compact('user'));
+        return view('admin.userManagement.show', compact('user'));
     }
 
     /**
@@ -30,9 +30,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        return view('admin.userManagement.edit', compact('user'));
+    
     }
-
     /**
      * Update een gebruiker in de database
      */
@@ -46,7 +46,7 @@ class UserController extends Controller
 
         $user->update($request->only(['name', 'email', 'role']));
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.userManagement.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -55,6 +55,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.userManagement.index')->with('success', 'User deleted successfully.');
     }
 }
