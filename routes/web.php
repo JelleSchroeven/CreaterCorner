@@ -11,6 +11,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 | Public Routes (No Login Required)
@@ -60,17 +62,6 @@ Route::middleware('auth')->group(function () {
 });
 
 /*
-| Admin Routes
-*/
-Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function() {
-    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-    Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('/events', [EventController::class, 'store'])->name('events.store');
-});
-
-/*
 | Seller Routes
 */
 Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group(function() {
@@ -96,5 +87,24 @@ Route::middleware('auth')->group(function () {
     Route::resource('news-posts', NewsPostController::class);
     Route::resource('products', ProductController::class);
 });
+
+
+
+
+/*
+| Admin Routes
+*/
+Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function() {
+    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+});
+
+Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function(){
+    Route::resource('events', Admin\EventController::class);
+    Route::resource('users', Admin\UserController::class), ['as'=> 'admin'];
+})
 
 require __DIR__.'/auth.php';
