@@ -11,8 +11,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
-use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 | Public Routes (No Login Required)
@@ -88,23 +89,23 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
 });
 
-
-
-
 /*
 | Admin Routes
 */
-Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function() {
-    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-    Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->name('admin.')->group(function(){
+    Route::resource('events', AdminEventController::class);
+    Route::resource('userManagement', AdminUserController::class);
+    
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
+    Route::patch('/admin/userManagement/update', [UserController::class, 'update'])->name('admin.userManagement.update');
+
+    
+    
+    // tijdelijke placeholder routes
+        Route::get('/faq', fn() => 'FAQ Management coming soon')->name('faq.index');
+        Route::get('/events', fn() => redirect()->route('admin.events.index'))->name('events.index');
 });
 
-Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function(){
-    Route::resource('events', Admin\EventController::class);
-    Route::resource('users', Admin\UserController::class), ['as'=> 'admin'];
-})
 
 require __DIR__.'/auth.php';
