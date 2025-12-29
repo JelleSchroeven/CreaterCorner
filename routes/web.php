@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
 /*
 | Admin Routes
 */
-Route::middleware(['auth','admin'])->group(function() {
+Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->group(function() {
     Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
