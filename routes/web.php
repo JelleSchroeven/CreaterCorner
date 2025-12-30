@@ -98,10 +98,9 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
-    Route::patch('/admin/userManagement/update', [UserController::class, 'update'])->name('admin.userManagement.update');
+    Route::patch('/userManagement/update', [UserController::class, 'update'])->name('userManagement.update');
+    Route::delete('userManagement/delete', [UserController::class, 'destroy'])->name('userManagement.delete');
 
-    
-    
     // tijdelijke placeholder routes
         Route::get('/faq', fn() => 'FAQ Management coming soon')->name('faq.index');
         Route::get('/events', fn() => redirect()->route('admin.events.index'))->name('events.index');

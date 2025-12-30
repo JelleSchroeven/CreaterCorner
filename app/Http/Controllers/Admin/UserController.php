@@ -82,9 +82,11 @@ class UserController extends Controller
     /**
      * Verwijder een gebruiker
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
+        $user = User::findOrFail($request->user_id);
         $user->delete();
         return redirect()->route('admin.userManagement.index')->with('success', 'User deleted successfully.');
     }
+
 }
