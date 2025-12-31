@@ -30,6 +30,7 @@ Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faqs/filter', [FaqController::class, 'filter'])->name('faqs.filter.public');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
@@ -100,7 +101,6 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::resource('events', AdminEventController::class);
     Route::resource('userManagement', AdminUserController::class);
     Route::resource('faq-categories', FaqCategoryController::class); 
-    Route::resource('faqs', AdminFaqController::class);
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
@@ -108,6 +108,8 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::delete('userManagement/delete', [AdminUserController::class, 'destroy'])->name('userManagement.delete');
     
     Route::get('/faq', [AdminFaqController::class, 'index'])->name('faq.index');
+    Route::get('/faqs/filter', [AdminFaqController::class, 'filter'])->name('faqs.filter');
+    Route::resource('faqs', AdminFaqController::class);
 
     // tijdelijke placeholder routes
         
