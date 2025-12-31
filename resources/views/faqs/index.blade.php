@@ -2,6 +2,17 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-6">Veelgestelde vragen</h1>
 
+        <select name="category_id" onchange="this.form.submit()">
+            <option value="">Alle categorieën</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" @if(request('category_id') == $category->id) selected @endif>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+        
+        <input type="text" name="search" placeholder="Zoek FAQ..." value="{{ request('search') }}" class="border rounded px-2 py-1 mb-2">
+
         <div class="space-y-2">
             @foreach($faqs as $faq)
                 <div class="bg-white shadow rounded-lg">
