@@ -17,7 +17,7 @@ class FaqController extends Controller
 
         return view('admin.faqs.index', compact('faqs', 'categories'));
     }
-    
+
     // Nieuwe FAQ aanmaken
     public function store(Request $request)
     {
@@ -28,6 +28,8 @@ class FaqController extends Controller
         ]);
 
         $faq = Faq::create($data);
+
+        $faq->load('category');
 
         return response()->json($faq, 201);
     }
@@ -42,9 +44,18 @@ class FaqController extends Controller
         ]);
 
         $faq->update($data);
+        $faq->load('category');
 
         return response()->json($faq);
     }
+    
+
+    public function show(Faq $faq)
+    {
+        $faq->load('category');
+        return response()->json($faq);
+    }
+
 
     // FAQ verwijderen
     public function destroy(Faq $faq)
