@@ -119,24 +119,21 @@ Start de lokale server:
 bash
 Copy code
 php artisan serve
-Testaccounts
-Admin
 
-Email: admin@creatorcorner.com
+## Testaccounts
 
-Wachtwoord: <wachtwoord hier>
+* **Admin**
+  - Email: [admin@ehb.be](mailto:admin@ehb.be)
+  - Wachtwoord: `Password!321`
 
-Seller (creator)
+* **Seller** (creator)
+  - Email: [seller@test.com](mailto:seller@test.com)
+  - Wachtwoord: `<wachtwoord hier>`
 
-Email: seller@creatorcorner.com
+* **User**
+  - Email: [user@test.com](mailto:user@test.com)
+  - Wachtwoord: `<wachtwoord hier>`
 
-Wachtwoord: <wachtwoord hier>
-
-User
-
-Email: user@creatorcorner.com
-
-Wachtwoord: <wachtwoord hier>
 
 Bronvermelding
 Laravel documentatie: https://laravel.com/docs
