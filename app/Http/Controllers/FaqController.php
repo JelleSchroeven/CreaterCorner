@@ -7,13 +7,27 @@ use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Alle FAQ's ophalen
-        $faqs = Faq::all();
+        $categories = \App\Models\FaqCategory::all(); // <-- categorieën ophalen
+        $query = Faq::with('category'); // categorie laden
 
-        // View returnen met FAQ's
-        return view('faqs.index', compact('faqs'));
+        // Optioneel: filteren op categorie
+        if ($request->has('category_id') && $request->category_id != null) {
+            $query->where('faq_category_id', $request->category_id);
+        }
+
+        if ($request->has('search') && $request->search != null) {
+            $query->where(function($q) use ($request) {
+                $q->where('question', 'like', '%' . $request->search . '%')
+                ->orWhere('answer', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $faqs = $query->get();
+
+        return view('faqs.index', compact('faqs', 'categories')); 
     }
+
 }
 
