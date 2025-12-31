@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 class FaqController extends Controller
 {
     // Lijst van alle FAQ's met categorie
-    public function index()
+   public function index()
     {
         $faqs = Faq::with('category')->latest()->get();
-        return response()->json($faqs);
-    }
+        $categories = FaqCategory::all();
 
+        return view('admin.faqs.index', compact('faqs', 'categories'));
+    }
+    
     // Nieuwe FAQ aanmaken
     public function store(Request $request)
     {
