@@ -56,6 +56,27 @@ class FaqController extends Controller
         return response()->json($faq);
     }
 
+    public function filter(Request $request)
+    {
+        $query = Faq::with('category');
+
+        if($request->has('category_id') && $request->category_id != ''){
+            $query->where('faq_category_id', (int) $request->category_id);
+        }
+
+        if($request->has('search') && $request->search != ''){
+            $query->where(function($q) use ($request){
+                $q->where('question', 'like', "%{$request->search}%")
+                ->orWhere('answer', 'like', "%{$request->search}%");
+            });
+        }
+
+        $faqs = $query->latest()->get();
+
+        return response()->json($faqs);
+    }
+
+
 
     // FAQ verwijderen
     public function destroy(Faq $faq)
