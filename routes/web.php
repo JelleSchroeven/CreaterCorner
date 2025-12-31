@@ -12,9 +12,12 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
+
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+
 
 /*
 | Public Routes (No Login Required)
@@ -97,7 +100,7 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::resource('events', AdminEventController::class);
     Route::resource('userManagement', AdminUserController::class);
     Route::resource('faq-categories', FaqCategoryController::class);
-    Route::resource('faqs', FaqController::class);
+    Route::resource('faqs', AdminFaqController::class);
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
