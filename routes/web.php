@@ -111,9 +111,6 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::get('/faqs/filter', [AdminFaqController::class, 'filter'])->name('faqs.filter');
     Route::resource('faqs', AdminFaqController::class);
 
-    // tijdelijke placeholder routes
-        
-        Route::get('/events', fn() => redirect()->route('admin.events.index'))->name('events.index');
 });
 
 
