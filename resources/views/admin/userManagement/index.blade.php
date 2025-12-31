@@ -92,12 +92,24 @@
 
                                 <div>
                                     <label class="block text-sm">Password</label>
-                                    <input class="w-full border rounded p-2" type="password" name="password" required>
+                                    <input 
+                                        class="w-full border rounded p-2" 
+                                        type="password" 
+                                        name="password"
+                                        required
+                                        autocomplete="new-password"
+                                    >
                                 </div>
 
                                 <div>
                                     <label class="block text-sm">Confirm Password</label>
-                                    <input class="w-full border rounded p-2" type="password" name="password_confirmation" required>
+                                    <input 
+                                        class="w-full border rounded p-2" 
+                                        type="password" 
+                                        name="password_confirmation"
+                                        required
+                                        autocomplete="new-password"
+                                    >
                                 </div>
 
                                 <div class="flex justify-end gap-3 pt-4">
@@ -150,12 +162,23 @@
 
                                 <div>
                                     <label class="block text-sm">New Password (optional)</label>
-                                    <input class="w-full border rounded p-2" type="password" name="password" autocomplete="new-password">
+                                    <input 
+                                        class="w-full border rounded p-2" 
+                                        type="password" 
+                                        name="password"
+                                        autocomplete="new-password"
+                                    >
+
                                 </div>
 
                                 <div>
                                     <label class="block text-sm">Confirm Password</label>
-                                    <input class="w-full border rounded p-2" type="password" name="password_confirmation">
+                                    <input 
+                                        class="w-full border rounded p-2" 
+                                        type="password" 
+                                        name="password_confirmation"
+                                        autocomplete="new-password"
+                                    >
                                 </div>
 
                                 <div class="flex justify-end gap-3 pt-4">
