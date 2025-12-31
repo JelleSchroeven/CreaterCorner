@@ -140,7 +140,7 @@ Volg de onderstaande stappen om het project lokaal te draaien:
 ## Opmerkingen
 
 * Dashboard is nog leeg en kan verder worden uitgebreid met overzichtswidgets
-* Admin functionaliteiten (beheer van gebruikers, nieuws, FAQ) zijn nog niet geïmplementeerd
+* Admin functionaliteiten ( nieuws) zijn nog niet geïmplementeerd
 * Nieuwsitems moeten nog worden toegevoegd
 
 ```
