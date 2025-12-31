@@ -102,6 +102,10 @@ Volg de onderstaande stappen om het project lokaal te draaien:
 
    ```bash
    php artisan serve
+   en als dat niet werkt:
+   php -S 127.0.0.1:8081 -t public
+   en 
+   npmm run dav
    ```
 
 ---
