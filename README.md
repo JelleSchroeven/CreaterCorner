@@ -1,11 +1,14 @@
-
-# Laravel Project 1 - Dynamische Website
+# Laravel Project 1 - Creater Corner
 
 ## Inleiding
 Dit is een dynamische Laravel-website ontwikkeld voor Project 1. De website bevat functionaliteiten zoals een login-systeem, profielbeheer, evenementen, shops, shopping cart, FAQ en contactformulier. Het project is opgezet met Laravel (laatste beschikbare versie bij de start van de lessen) en volgt best practices zoals resource controllers, middleware en Eloquent modellen.
 
 ### Huidige functionaliteiten
 De website bevat tot nu toe de volgende onderdelen:
+
+---
+
+### **Main Website**
 
 1. **Authenticatie**
    - Bezoekers kunnen zich registreren en inloggen
@@ -14,12 +17,12 @@ De website bevat tot nu toe de volgende onderdelen:
    - Vier accounttypes: `user`, `seller` (creator), `admin`, `moderator`
    - Testaccounts aangemaakt: admin, seller, user
 
-2. **Dashboard**
+2. **Dashboard (User)**
    - Momenteel leeg, kan dienen als overzicht van events/shops/nieuws
 
 3. **Events**
-   - Lijst van evenementen uit de database
-   - CRUD via resource controller aanwezig voor verdere uitbreiding
+   - Lijst van evenementen uit de database voor gebruikers
+   - Admin CRUD functionaliteit toegevoegd via admin-gedeelte
 
 4. **Shops & Producten**
    - Lijst van shops
@@ -35,25 +38,45 @@ De website bevat tot nu toe de volgende onderdelen:
    - Eigen profiel aanpassen mogelijk: username, profielfoto, bio, verjaardag
    - Publieke profielpagina toegankelijk via `/users/{username}`
 
-7. **FAQ**
+7. **FAQ – User Page**
    - Lijst van vragen en antwoorden uit de database
-   - Gelinkt in de navigatiebalk
-   - Beheer van categorieën en vragen/antwoorden door admins nog te implementeren
+   - Toggle voor antwoorden
+   - Realtime zoeken en filteren op categorie via AJAX
 
 8. **Contactpagina**
    - Formulier met velden: naam, e-mail, onderwerp, bericht
    - Formulier “verstuurd” naar log (Mail driver: `log`) voor testing
    - Server-side validatie en CSRF-bescherming aanwezig
-   - Voldoet aan de functionele eisen van de opdracht
+
+---
+
+### **Admin Gedeelte**
+
+1. **Admin Dashboard**
+   - Toont aantal users, shops en events
+   - Knop “Manage Users” naar `/admin/userManagement`  
+
+2. **Manage Users**
+   - Gebruikerslijst zichtbaar
+   - Gebruikers kunnen worden aangemaakt, bewerkt en verwijderd
+
+3. **Manage Events**
+   - Admin CRUD functionaliteit: create, edit, delete, manage
+   - Dynamische updates via resource controllers
+
+4. **FAQ – Admin Page**
+   - Beheer van FAQ’s en categorieën (create, edit, delete)
+   - Realtime filteren en zoeken via AJAX
+   - Dynamische updates van de lijst na wijzigingen zonder pagina-refresh
 
 ---
 
 ## Technische aspecten
-- **Routes**: Alle routes via controller methods, gegroepeerd waar logisch, middleware toegepast
-- **Controllers**: Resource controllers gebruikt voor CRUD operaties
-- **Models & Database**: Eloquent models voor users, shops, products, events, FAQ
-- **Views**: Basis layouts aanwezig, componenten gebruikt waar logisch
-- **Beveiliging**: CSRF-bescherming, server-side validatie, middleware voor rolbeheer aanwezig
+- **Routes**: Alle routes via controller methods, gegroepeerd waar logisch, middleware toegepast  
+- **Controllers**: Resource controllers gebruikt voor CRUD operaties (Users, FAQ, Events)  
+- **Models & Database**: Eloquent models voor users, shops, products, events, FAQ; One-to-many relatie FAQ/Categorieën aanwezig  
+- **Views**: Basis layouts aanwezig, componenten gebruikt waar logisch  
+- **Beveiliging**: CSRF-bescherming, server-side validatie, middleware voor rolbeheer aanwezig  
 
 ---
 
@@ -64,84 +87,69 @@ Volg de onderstaande stappen om het project lokaal te draaien:
    ```bash
    git clone <GITHUB_REPO_URL>
    cd <PROJECT_FOLDER>
-````
+Installeer dependencies:
 
-2. Installeer dependencies:
+bash
+Copy code
+composer install
+npm install
+npm run dev
+Kopieer het .env.example bestand naar .env en configureer:
 
-   ```bash
-   composer install
-   npm install
-   npm run dev
-   ```
+bash
+Copy code
+cp .env.example .env
+Voor development kan de mail driver log blijven:
 
-3. Kopieer het `.env.example` bestand naar `.env` en configureer:
+env
+Copy code
+MAIL_MAILER=log
+Genereer de application key:
 
-   ```bash
-   cp .env.example .env
-   ```
+bash
+Copy code
+php artisan key:generate
+Migreer en seed de database:
 
-   Voor development kan de mail driver `log` blijven:
+bash
+Copy code
+php artisan migrate:fresh --seed
+Start de lokale server:
 
-   ```env
-   MAIL_MAILER=log
-   ```
+bash
+Copy code
+php artisan serve
+Testaccounts
+Admin
 
-4. Genereer de application key:
+Email: admin@creatorcorner.com
 
-   ```bash
-   php artisan key:generate
-   ```
+Wachtwoord: <wachtwoord hier>
 
-5. Migreer en seed de database:
+Seller (creator)
 
-   ```bash
-   php artisan migrate:fresh --seed
-   ```
+Email: seller@creatorcorner.com
 
-6. Start de lokale server:
+Wachtwoord: <wachtwoord hier>
 
-   ```bash
-   php artisan serve
-   en als dat niet werkt:
-   php -S 127.0.0.1:8081 -t public
-   en 
-   npmm run dav
-   ```
+User
 
----
+Email: user@creatorcorner.com
 
-## Testaccounts
+Wachtwoord: <wachtwoord hier>
 
-* **Admin**
+Bronvermelding
+Laravel documentatie: https://laravel.com/docs
 
-  * Email: [admin@ehb.be](mailto:admin@ehb.be)
-  * Wachtwoord: 
+Voorbeeld implementatie Mailables en resource controllers: Laravel Docs en tutorials
 
-* **Seller** (creator)
+Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel practices
 
-  * Email: [seller@test.com](mailto:seller@test.com)
-  * Wachtwoord: 
+Opmerkingen / To-Do
+Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
 
-* **User**
+Nieuwsitems functionaliteit nog niet toegevoegd
 
-  * Email: [user@test.com](mailto:user@test.com)
-  * Wachtwoord: 
+Many-to-many relaties nog op te zetten (technische vereiste)
 
----
-
-## Bronvermelding
-
-* Laravel documentatie: [https://laravel.com/docs](https://laravel.com/docs)
-* Voorbeeld implementatie Mailables en resource controllers: Laravel Docs en tutorials
-* Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel practices
-
----
-
-## Opmerkingen
-
-* Dashboard is nog leeg en kan verder worden uitgebreid met overzichtswidgets
-* Admin functionaliteiten ( nieuws) zijn nog niet geïmplementeerd
-* Nieuwsitems moeten nog worden toegevoegd
-
-```
-```
+Eindtest en screencast/demo voorbereiden voor inlevering
