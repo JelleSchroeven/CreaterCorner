@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->name('admin.')->group(function(){
     Route::resource('events', AdminEventController::class);
     Route::resource('userManagement', AdminUserController::class);
-    Route::resource('faq-categories', FaqCategoryController::class);
+    Route::resource('faq-categories', FaqCategoryController::class); 
     Route::resource('faqs', AdminFaqController::class);
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -107,9 +107,10 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::patch('/userManagement/update', [AdminUserController::class, 'update'])->name('userManagement.update');
     Route::delete('userManagement/delete', [AdminUserController::class, 'destroy'])->name('userManagement.delete');
     
+    Route::get('/faq', [AdminFaqController::class, 'index'])->name('faq.index');
 
     // tijdelijke placeholder routes
-        Route::get('/faq', fn() => 'FAQ Management coming soon')->name('faq.index');
+        
         Route::get('/events', fn() => redirect()->route('admin.events.index'))->name('events.index');
 });
 
