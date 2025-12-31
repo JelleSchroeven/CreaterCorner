@@ -1,32 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Events') }}
+            {{ __('Events management') }}
         </h2>
     </x-slot>
-
-    <div class="flex">
-        {{-- Admin Sidebar --}}
-        @auth
-            @if(auth()->user()->is_admin)
-                <div class="w-64 bg-gray-200 p-4">
-                    @include('admin.partials.sidebar')
-                </div>
-            @endif
-        @endauth
-
-        {{-- Main Content --}}
-        <div class="flex-1 p-6">
-            {{-- Jouw huidige content hier --}}
-            @if(session('success'))
-                <div class="mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @yield('content') {{-- Als je content secties gebruikt --}}
-        </div>
-    </div>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
