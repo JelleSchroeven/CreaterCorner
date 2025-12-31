@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
@@ -95,11 +96,14 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->name('admin.')->group(function(){
     Route::resource('events', AdminEventController::class);
     Route::resource('userManagement', AdminUserController::class);
+    Route::resource('faq-categories', FaqCategoryController::class);
+    Route::resource('faqs', FaqController::class);
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
     Route::patch('/userManagement/update', [AdminUserController::class, 'update'])->name('userManagement.update');
     Route::delete('userManagement/delete', [AdminUserController::class, 'destroy'])->name('userManagement.delete');
+    
 
     // tijdelijke placeholder routes
         Route::get('/faq', fn() => 'FAQ Management coming soon')->name('faq.index');
