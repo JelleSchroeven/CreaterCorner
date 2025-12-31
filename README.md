@@ -135,14 +135,14 @@ php artisan serve
   - Wachtwoord: `<wachtwoord hier>`
 
 
-Bronvermelding
+## Bronvermelding
 Laravel documentatie: https://laravel.com/docs
 
 Voorbeeld implementatie Mailables en resource controllers: Laravel Docs en tutorials
 
 Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel practices
 
-Opmerkingen / To-Do
+## Opmerkingen / To-Do
 Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
 
 Nieuwsitems functionaliteit nog niet toegevoegd
