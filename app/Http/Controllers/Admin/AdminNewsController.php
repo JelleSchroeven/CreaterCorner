@@ -29,7 +29,7 @@ class AdminNewsController extends Controller
             'published_at' => 'required|date'
         ]);
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('news', 'public');
+            $data['image'] = $request->file('image')->store('news', 'public');
         }
         
         $data['user_id'] = Auth() -> id();
@@ -38,18 +38,17 @@ class AdminNewsController extends Controller
         return redirect()->route('admin.news.index');
     }
 
-    public function show(string $id)
+    public function show(News $news)
     {   
-        $news = News::findOrFail($id);
         return view('admin.news.show', compact('news'));
     }
 
-    public function edit(string $id)
-    {
+    public function edit(News $news)
+    {       
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, News $news)
     {
         $data = $request->validate([
             'title' => 'required|max:255',
@@ -58,9 +57,11 @@ class AdminNewsController extends Controller
             'published_at' => 'required|date'
         ]);
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($news->image);
-            $data['image'] = $request -> file('image')->store('news', 'public');
+         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            if ($news->image && Storage::disk('public')->exists($news->image)) {
+                Storage::disk('public')->delete($news->image);
+            }
+            $data['image'] = $request->file('image')->store('news', 'public');
         }
 
         $news->update($data);
