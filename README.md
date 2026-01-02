@@ -100,33 +100,49 @@ De website bevat tot nu toe de volgende onderdelen:
 Volg de onderstaande stappen om het project lokaal te draaien:
 
 1. Clone de repository:
+   ```bash
    git clone <GITHUB_REPO_URL>
    cd <PROJECT_FOLDER>
+   ```
 
 2. Installeer dependencies:
+   ```bash
    composer install
    npm install
    npm run dev
+   ```
 
 3. Kopieer het .env.example bestand naar .env en configureer:
+   ```bash
    cp .env.example .env
+   ```
 
 3. Voor development kan de mail driver log blijven:
+   ```bash
    MAIL_MAILER=log
+   ```
 
 4. Genereer de application key:
+   ```bash
    php artisan key:generate
+   ```
 
 5. Migreer en seed de database:
+   ```bash
    php artisan migrate:fresh --seed
+   ```
 
 6. Start de lokale server:
+   ```bash
    php artisan serve
+   ```
 
 6. als dit niet werkt: 
-   je kan implaats van php "artisan serve" kan je dit gebruiken in je root folder:
-   - php -S 127.0.0.1:8081 -t public
-   note: hiervoor moet npm run dev ook actief zijn voor frontend.
+   je kan implaats van php "artisan serve" kan je dit gebruiken in je root folder. note: hiervoor moet npm run dev ook actief zijn voor frontend. 
+   ```bash
+   php -S 127.0.0.1:8081 -t public
+   ```
+   
 
 ## Testaccounts
 
