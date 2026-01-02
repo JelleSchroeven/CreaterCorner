@@ -13,7 +13,7 @@
                 
                 @if($news->image)
                     <div>
-                        <img class="max-w-xl rounded" src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}">
+                        <img src="{{ asset('storage/' . $news->image) }}" class="max-w-[450px] max-h-[300px] object-contain rounded">
                     </div>
                 @endif
 

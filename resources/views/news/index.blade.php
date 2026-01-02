@@ -9,9 +9,7 @@
                 <h3 class="text-lg font-bold">{{ $item->title }}</h3>
 
                 @if($item->image)
-                    <img class="mt-4 max-w-full rounded"
-                         src="{{ asset('storage/' . $item->image) }}"
-                         alt="{{ $item->title }}">
+                    <img src="{{ asset('storage/' . $item->image) }}" class="max-w-[450px] max-h-[300px] object-contain rounded" alt="{{ $item->title }}">
                 @endif
 
                 <p class="text-sm text-gray-500 mt-2">

@@ -22,7 +22,7 @@
                 @if($news->image)
                     <div>
                         <label class="block font-medium mb-1">Huidige afbeelding</label>
-                        <img class="max-w-sm mb-2 rounded" src="{{ asset('storage/' . $news->image) }}">
+                        <img src="{{ asset('storage/' . $news->image) }}" class="max-w-[300px] max-h-[200px] object-contain rounded">
                     </div>
                 @endif
 
