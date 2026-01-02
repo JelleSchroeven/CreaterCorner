@@ -11,11 +11,11 @@ class News extends Model
     ];
 
     protected $casts  =[
-        'publishedd_at' => 'datetime'
-    ]
+        'published_at' => 'datetime'
+    ];
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id')
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
