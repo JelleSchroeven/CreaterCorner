@@ -56,6 +56,13 @@ class AdminNewsController extends Controller
             'content' => 'required|string',
             'published_at' => 'required|date'
         ]);
+        
+        if ($request->has('remove_image') && $news->image) {
+            if (Storage::disk('public')->exists($news->image)) {
+                Storage::disk('public')->delete($news->image);
+            }
+            $data['image'] = null;
+        }
 
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
             if ($news->image && Storage::disk('public')->exists($news->image)) {

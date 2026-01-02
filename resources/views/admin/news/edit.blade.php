@@ -18,13 +18,21 @@
                     <label class="block font-medium mb-1">Titel</label>
                     <input class="w-full border rounded p-2" type="text" name="title" value="{{ old('title', $news->title) }}">
                 </div>
-
-                @if($news->image)
-                    <div>
+                
+                <div>
+                    @if($news->image)
                         <label class="block font-medium mb-1">Huidige afbeelding</label>
-                        <img src="{{ asset('storage/' . $news->image) }}" class="max-w-[300px] max-h-[200px] object-contain rounded">
-                    </div>
-                @endif
+                        <img class="max-w-[300px] max-h-[200px] object-contain rounded" src="{{ asset('storage/' . $news->image) }}">
+                        
+                        <!-- Checkbox om afbeelding te verwijderen -->
+                        <div class="mt-2">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" name="remove_image" value="1" class="form-checkbox">
+                                <span class="ml-2 text-gray-700">Verwijder huidige afbeelding</span>
+                            </label>
+                        </div>
+                    @endif
+                </div>
 
                 <div>
                     <label class="block font-medium mb-1">Nieuwe afbeelding</label>
