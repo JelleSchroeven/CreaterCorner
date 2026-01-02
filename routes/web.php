@@ -12,11 +12,13 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\NewsController;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\AdminNewsController;
 
 
 /*
@@ -29,15 +31,21 @@ Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 
 Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
 
+//faq pagina
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/faqs/filter', [FaqController::class, 'filter'])->name('faqs.filter.public');
 
+//contact pagina
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
 // Public events listing
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+//news
+Route::get('/news', [NewsController::class, 'index']);
+Route::get('/news/{news}', [NewsController::class, 'show']);
 
 /*-
 | Cart Routes (Guests & Auth Users)
@@ -100,7 +108,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])->name('admin.')->group(function(){
     Route::resource('events', AdminEventController::class);
     Route::resource('userManagement', AdminUserController::class);
-    Route::resource('faq-categories', FaqCategoryController::class); 
+    Route::resource('faq-categories', FaqCategoryController::class);
+    Route::resource('news', AdminNewsController::class);
     
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/userManagement', [AdminUserController::class, 'index'])->name('userManagement.index');
@@ -110,6 +119,7 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::get('/faq', [AdminFaqController::class, 'index'])->name('faq.index');
     Route::get('/faqs/filter', [AdminFaqController::class, 'filter'])->name('faqs.filter');
     Route::resource('faqs', AdminFaqController::class);
+
 
 });
 
