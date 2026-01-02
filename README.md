@@ -43,7 +43,14 @@ De website bevat tot nu toe de volgende onderdelen:
    - Toggle voor antwoorden
    - Realtime zoeken en filteren op categorie via AJAX
 
-8. **Contactpagina**
+8. **Nieuws – User Page**
+   - Lijst van nieuwsitems uit de database
+   - Nieuwsitems pagineren (10 items per pagina)
+   - Toont titel, publicatiedatum, afbeelding (indien aanwezig) en ingekorte content
+   - Klikken op een nieuwsitem opent de volledige inhoud
+   - Afbeeldingen worden automatisch geschaald tot een maximum breedte/hoogte
+
+9. **Contactpagina**
    - Formulier met velden: naam, e-mail, onderwerp, bericht
    - Formulier “verstuurd” naar log (Mail driver: `log`) voor testing
    - Server-side validatie en CSRF-bescherming aanwezig
@@ -68,6 +75,15 @@ De website bevat tot nu toe de volgende onderdelen:
    - Beheer van FAQ’s en categorieën (create, edit, delete)
    - Realtime filteren en zoeken via AJAX
    - Dynamische updates van de lijst na wijzigingen zonder pagina-refresh
+
+5. **Nieuws – Admin Page**
+   - Admin CRUD functionaliteit: create, edit, delete
+   - Afbeeldingen kunnen toegevoegd of verwijderd worde
+   - Afbeeldingen hebben een maximum bestandsgrootte (2 MB)
+   - Afbeeldingen worden automatisch geschaald bij weergave
+   - Admin kan bestaande afbeeldingen verwijderen zonder een nieuwe toe te voegen
+   - Nieuwsitems zijn gepagineerd (10 per pagina) in het overzicht
+   - Alleen toegankelijk voor admins via middleware IsAdmin
 
 ---
 
@@ -123,15 +139,15 @@ php artisan serve
 ## Testaccounts
 
 * **Admin**
-  - Email: [admin@ehb.be](mailto:admin@ehb.be)
+  - Email: [admin@ehb.be]
   - Wachtwoord: `Password!321`
 
 * **Seller** (creator)
-  - Email: [seller@test.com](mailto:seller@test.com)
+  - Email: [seller@test.com]
   - Wachtwoord: `<wachtwoord hier>`
 
 * **User**
-  - Email: [user@test.com](mailto:user@test.com)
+  - Email: [user@test.com]
   - Wachtwoord: `<wachtwoord hier>`
 
 
@@ -144,8 +160,6 @@ Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel 
 
 ## Opmerkingen / To-Do
 Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
-
-Nieuwsitems functionaliteit nog niet toegevoegd
 
 Many-to-many relaties nog op te zetten (technische vereiste)
 
