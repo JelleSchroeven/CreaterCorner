@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class News extends Model
 {
     protected $fillable = [
-        'title', 'image, 'content, published_at , user_id 
+        'title', 'image', 'content', 'ublished_at' , 'user_id', 
     ];
 
     protected $casts  =[
