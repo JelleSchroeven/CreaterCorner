@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // shop owner
+            $table->string('slug')->unique();
             $table->string('name'); //shop name
             $table->text('description')->nullable();
             $table->string('banner_image')->nullable(); // optioneel
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

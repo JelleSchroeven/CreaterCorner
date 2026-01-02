@@ -152,11 +152,11 @@ Volg de onderstaande stappen om het project lokaal te draaien:
 
 * **Seller** (creator)
   - Email: [seller@test.com]
-  - Wachtwoord: `<wachtwoord hier>`
+  - Wachtwoord: `Password!321`
 
 * **User**
   - Email: [user@test.com]
-  - Wachtwoord: `<wachtwoord hier>`
+  - Wachtwoord: `Password!321`
 
 
 ## Bronvermelding
