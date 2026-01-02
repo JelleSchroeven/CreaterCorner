@@ -21,41 +21,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\AdminNewsController;
 
-/*
-| Public Routes (No Login Required)
-*/
-Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
-Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
-
-Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
-
-//faq pagina
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/faqs/filter', [FaqController::class, 'filter'])->name('faqs.filter.public');
-
-//contact pagina
-Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
-
-// Public events listing
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
-
-//news
-Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
-
-/*-
-| Cart Routes (Guests & Auth Users)
-*/
-Route::prefix('cart')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    Route::patch('/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/{id}', [CartController::class, 'remove'])->name('cart.remove');
-});
 
 /*
 | Authenticated Routes (Login Required)
@@ -123,5 +89,41 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
 
 });
 
+
+/*
+| Public Routes (No Login Required)
+*/
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
+Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
+
+Route::get('/users/{user:username}', [PublicProfileController::class, 'show'])->name('users.show');
+
+//faq pagina
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faqs/filter', [FaqController::class, 'filter'])->name('faqs.filter.public');
+
+//contact pagina
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+// Public events listing
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+//news
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
+/*-
+| Cart Routes (Guests & Auth Users)
+*/
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/{id}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
 require __DIR__.'/auth.php';
