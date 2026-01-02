@@ -32,6 +32,7 @@
                 <a href="{{ route('admin.faq.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded shadow text-center">Manage FAQ</a>
                 <a href="{{ route('admin.userManagement.index') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded shadow text-center">Manage Users</a>
                 <a href="{{ route('admin.events.index') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded shadow text-center">Manage Events</a>
+                <a href="{{ route('admin.news.index') }}" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded shadow text-center">Manage News</a>
             </div>
 
         </div>
