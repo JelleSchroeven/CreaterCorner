@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <a class="text-blue-600 mt-2 inline-block" href="{{ route('news.index') }}">
+                <a class="text-blue-600 mt-2 inline-block" href="{{ route('admin.news.index') }}">
                     ← Terug naar overzicht
                 </a>
             </div>
