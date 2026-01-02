@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
@@ -20,11 +21,10 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\AdminNewsController;
 
-
 /*
 | Public Routes (No Login Required)
 */
-Route::get('/', function () { return view('dashboard'); })->name('home');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 Route::get('/shops', [ShopController::class, 'index'])->name('shops.index');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
