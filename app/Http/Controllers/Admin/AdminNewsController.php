@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\News
+use App\Models\News;
 
 class AdminNewsController extends Controller
 {
     public function index()
     {
-        //
+        $news = News::latest()->paginate(10);
+        return view('admin.news.index', compact('news'));
     }
 
     public function create()
     {
-        //
+        return view('admin.news.create');
     }
 
     public function store(Request $request)
@@ -37,12 +38,12 @@ class AdminNewsController extends Controller
 
     public function show(string $id)
     {
-        //
+        return view('admin.news.show', compact('news'));
     }
 
     public function edit(string $id)
     {
-        //
+        return view('admin.news.edit', compact('news'));
     }
 
     public function update(Request $request, string $id)
