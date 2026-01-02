@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\News;
+use App\Models\News;    
 
 class AdminNewsController extends Controller
 {
@@ -23,21 +23,24 @@ class AdminNewsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' =>'recuired|max:255',
-            'image' =>'recuired|image|max:2048',
-            'content' => 'recuired',
-            'published_at' => 'recuired|data'
+            'title' =>'required|max:255',
+            'image' =>'nullable|image|max:2048',
+            'content' => 'required',
+            'published_at' => 'required|date'
         ]);
-
-        $date['image'] = $request->file('image')->store('news', 'public');
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('news', 'public');
+        }
+        
         $data['user_id'] = Auth() -> id();
 
         News::create($data);
-        return redirect()->route('admin.news.index')
+        return redirect()->route('admin.news.index');
     }
 
     public function show(string $id)
-    {
+    {   
+        $news = News::findOrFail($id);
         return view('admin.news.show', compact('news'));
     }
 
@@ -51,27 +54,27 @@ class AdminNewsController extends Controller
         $data = $request->validate([
             'title' => 'required|max:255',
             'image' => 'nullable|image|max:2048',
-            'content' => 'required',
+            'content' => 'required|string',
             'published_at' => 'required|date'
         ]);
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($news->image);
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $data['image'] = $request -> file('image')->store('news', 'public');
         }
 
         $news->update($data);
 
-        return redirect()->route('admin.news.index');
+        return redirect() -> route('admin.news.index');
     }
 
-    public function destroy(string $id)
+    public function destroy(News $news)
     {
         if ($news->image && Storage::disk('public')->exists($news->image)) {
-        Storage::disk('public')->delete($news->image);
+        Storage::disk('public') -> delete($news->image);
         }
 
-        $news -> delete()
-        return redirect()->route('admin.news.index')
+        $news -> delete();
+        return redirect() -> route('admin.news.index');
     }
 }
