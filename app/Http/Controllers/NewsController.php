@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class NewsController extends Controller
 {
@@ -14,7 +15,7 @@ class NewsController extends Controller
 
     public function show(News $news)
     {   
-        $news = News::findOrFail($id);
+        $news = News::findOrFail($news->id);
         return view('news.show', compact('news'));
     }
 
