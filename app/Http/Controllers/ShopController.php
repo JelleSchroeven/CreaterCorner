@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Event;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
 
 class ShopController extends Controller
 {
@@ -79,7 +79,8 @@ class ShopController extends Controller
     {
         $shop = Shop::with('user', 'products')->where('slug', $slug)->firstOrFail();
         $products = $shop->products;
-        return view('shop.shop', compact('shop','products'));
+        $events = Event::all();
+        return view('shop.shop', compact('shop','products','events'));
     }
 
     public function index()
