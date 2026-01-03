@@ -14,14 +14,13 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ShopEventController;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\AdminNewsController;
-
-
 
 /*
 | Authenticated Routes (Login Required)
@@ -36,9 +35,6 @@ Route::middleware('auth')->group(function () {
     //public profile management
     Route::get('/profile/edit', [PublicProfileController::class, 'edit'])->name('profile.edit.public');
     Route::patch('/profile/update', [PublicProfileController::class, 'update'])->name('profile.update.public'); 
-
-    // Follow/unfollow users
-    Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
 });
 
 /*
@@ -58,6 +54,9 @@ Route::middleware(['auth', \App\Http\Middleware\SellerMiddleware::class])->group
     Route::get('/my-products', [ProductController::class, 'editIndex'])->name('products.my');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::patch('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    
+    //events
+    Route::post('/events/{event}/going', [ShopEventController::class, 'toggleGoing'])->name('events.going');
 });
 
 /*
@@ -85,7 +84,6 @@ Route::prefix('admin')->middleware(['auth',\App\Http\Middleware\IsAdmin::class])
     Route::get('/faq', [AdminFaqController::class, 'index'])->name('faq.index');
     Route::get('/faqs/filter', [AdminFaqController::class, 'filter'])->name('faqs.filter');
     Route::resource('faqs', AdminFaqController::class);
-
 
 });
 
