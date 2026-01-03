@@ -33,6 +33,25 @@
                                 <p class="text-sm text-gray-500 mb-2">
                                     Locatie: {{ $event->location }}
                                 <p class="text-gray-700">{{ $event->description }}</p>
+
+                                @auth
+                                    @if(auth()->user()->role === 'seller')
+                                        @php
+                                            $shop = auth()->user()->shop ?? null;
+                                            $going = $shop ? $shop->events->contains($event->id) : false;
+                                        @endphp
+
+                                        @if($shop)
+                                            <form method="POST" action="{{ route('events.going', $event) }}">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="mt-2 px-4 py-2 rounded text-white {{ $going ? 'bg-red-500 hover:bg-red-600' : 'bg-green-600 hover:bg-green-700' }}">
+                                                    {{ $going ? 'Not Going' : 'I am going' }}
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endif
+                                @endauth
                             </div>
                         @endforeach
                     </div>
