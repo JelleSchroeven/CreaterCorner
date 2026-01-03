@@ -10,7 +10,7 @@
             <div class="w-full h-48 rounded-lg mb-6 bg-gray-200 relative overflow-hidden">
                 @if(!empty($shop->banner_image))
                     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $shop->banner_image) }}');"></div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40"></div> <!-- donker overlay voor contrast -->
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div> 
                 @endif
 
                 <!-- Shop Name -->
@@ -34,40 +34,43 @@
 
             <!-- EVENTS -->
             <div class="mb-6 p-4 bg-white rounded shadow">
-                <h3 class="font-bold text-lg mb-4 text-center bg-gray-50">Ik zal op de volgende events aanwezig zijn:</h3>
+                <h3 class="font-bold text-lg mb-4">Deze shop gaat naar volgende events:</h3>
 
                 @if($shop->events->isEmpty())
                     <p class="text-gray-600">Deze shop gaat nog naar geen events.</p>
                 @else
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($shop->events as $event)
-                            <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
-                                <h3 class="text-lg font-semibold mb-2">{{ $event->name }}</h3>
-                                <p class="text-sm text-gray-500 mb-2">
-                                    Datum: {{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }} 
-                                    - {{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}
-                                </p>
-                                <p class="text-sm text-gray-500 mb-2">
-                                    Locatie: {{ $event->location }}
-                                </p>
-                                <p class="text-gray-700">{{ $event->description }}</p>
+                    <div class="relative">
+                        <!-- Left Arrow -->
+                        <button id="scrollLeftBtn"
+                            onclick="scrollLeftEvent()"
+                            class="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-700 bg-opacity-50 hover:bg-opacity-80 text-white rounded-full w-10 h-10 z-20 flex items-center justify-center hidden">
+                            &larr;
+                        </button>
 
-                                @auth
-                                    @if(auth()->user()->role === 'seller' && auth()->user()->id === $shop->user_id)
-                                        <form method="POST" action="{{ route('events.going', $event) }}">
-                                            @csrf
-                                            <button type="submit"
-                                                class="mt-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600">
-                                                Not Going
-                                            </button>
-                                        </form>
-                                    @endif
-                                @endauth
-                            </div>
-                        @endforeach
+                        <!-- Events Container -->
+                        <div id="eventsContainer" class="flex space-x-4 overflow-x-hidden scroll-smooth px-2">
+                            @foreach($shop->events as $event)
+                                <div class="flex-shrink-0 w-1/3 md:w-1/3 lg:w-1/3 bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+                                    <h3 class="text-lg font-semibold mb-2">{{ $event->name }}</h3>
+                                    <p class="text-sm text-gray-500 mb-2">
+                                        Datum: {{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }} - {{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}
+                                    </p>
+                                    <p class="text-sm text-gray-500 mb-2">Locatie: {{ $event->location }}</p>
+                                    <p class="text-gray-700">{{ $event->description }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Right Arrow -->
+                        <button id="scrollRightBtn"
+                            onclick="scrollRightEvent()"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-700 bg-opacity-50 hover:bg-opacity-80 text-white rounded-full w-10 h-10 z-20 flex items-center justify-center hidden">
+                            &rarr;
+                        </button>
                     </div>
                 @endif
             </div>
+
 
             <!-- Producten Grid -->
             <div class="mb-6 p-4 bg-white rounded shadow">
@@ -118,4 +121,39 @@
 
         </div>
     </div>
+
+    <script>
+    const container = document.getElementById('eventsContainer');
+    const btnLeft = document.getElementById('scrollLeftBtn');
+    const btnRight = document.getElementById('scrollRightBtn');
+
+    function getScrollAmount(){
+        return container.clientWidth / 3;   
+    }
+
+    function scrollLeftEvent() {
+        const scrollAmount = getScrollAmount();
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        console.log('naar links gescrolled')
+    }
+
+    function scrollRightEvent() {
+        const scrollAmount = getScrollAmount();
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        console.log('naar rechts gescrolled')
+    }
+
+    function updateArrows() {
+        const scrollLeftPos = Math.ceil(container.scrollLeft); // ceil voorkomt float issues
+        const maxScroll = container.scrollWidth - container.clientWidth;
+
+        btnLeft.style.display = scrollLeftPos > 0 ? 'flex' : 'none';
+        btnRight.style.display = scrollLeftPos < maxScroll ? 'flex' : 'none';
+    }
+
+    updateArrows();
+
+    container.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    </script>
 </x-app-layout>
