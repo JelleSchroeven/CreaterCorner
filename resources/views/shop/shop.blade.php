@@ -32,6 +32,19 @@
                 <p class="text-gray-700">{{ $shop->description ?? 'Geen beschrijving beschikbaar.' }}</p>
             </div>
 
+            <div class="mb-6 p-4 bg-white rounded shadow">
+                <h3 class="font-bold text-lg mb-2">Deze shop gaat naar volgende events:</h3>
+                @if($shop->events->count())
+                    <ul class="space-y-1">
+                        @foreach($shop->events as $event)
+                            <li>{{ $event->name }} ({{ $event->start_date->format('d-m-Y') }})</li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-gray-600">Deze shop gaat nog naar geen events.</p>
+                @endif
+            </div>
+
             <!-- Producten Grid -->
             <div class="mb-6 p-4 bg-white rounded shadow">
                 <div>
