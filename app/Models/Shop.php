@@ -31,4 +31,10 @@ class Shop extends Model
     {
         return 'slug';
     }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class)->withTimestamps();
+    }
+
 }

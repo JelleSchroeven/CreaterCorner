@@ -19,6 +19,12 @@ class Event extends Model
     protected $casts = [
     'start_date' => 'datetime',
     'end_date' => 'datetime',
-];
+    ];
+
+    public function shops()
+    {
+        return $this->belongsToMany(Shop::class)->withTimestamps();
+    }
+
 
 }
