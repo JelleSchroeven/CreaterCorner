@@ -32,16 +32,40 @@
                 <p class="text-gray-700">{{ $shop->description ?? 'Geen beschrijving beschikbaar.' }}</p>
             </div>
 
+            <!-- EVENTS -->
             <div class="mb-6 p-4 bg-white rounded shadow">
-                <h3 class="font-bold text-lg mb-2">Deze shop gaat naar volgende events:</h3>
-                @if($shop->events->count())
-                    <ul class="space-y-1">
-                        @foreach($shop->events as $event)
-                            <li>{{ $event->name }} ({{ $event->start_date->format('d-m-Y') }})</li>
-                        @endforeach
-                    </ul>
-                @else
+                <h3 class="font-bold text-lg mb-4 text-center bg-gray-50">Ik zal op de volgende events aanwezig zijn:</h3>
+
+                @if($shop->events->isEmpty())
                     <p class="text-gray-600">Deze shop gaat nog naar geen events.</p>
+                @else
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($shop->events as $event)
+                            <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+                                <h3 class="text-lg font-semibold mb-2">{{ $event->name }}</h3>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Datum: {{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }} 
+                                    - {{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}
+                                </p>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Locatie: {{ $event->location }}
+                                </p>
+                                <p class="text-gray-700">{{ $event->description }}</p>
+
+                                @auth
+                                    @if(auth()->user()->role === 'seller' && auth()->user()->id === $shop->user_id)
+                                        <form method="POST" action="{{ route('events.going', $event) }}">
+                                            @csrf
+                                            <button type="submit"
+                                                class="mt-2 px-4 py-2 rounded text-white bg-red-500 hover:bg-red-600">
+                                                Not Going
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endauth
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
             </div>
 
