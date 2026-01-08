@@ -18,15 +18,18 @@ De website bevat tot nu toe de volgende onderdelen:
    - Testaccounts aangemaakt: admin, seller, user
 
 2. **Dashboard (User)**
-   - Momenteel leeg, kan dienen als overzicht van events/shops/nieuws
+   - about us section
+   - oplijsting van een aantal shops
+   - nieuws met paginas (10 nieuws artikels per pagina)
 
 3. **Events**
    - Lijst van evenementen uit de database voor gebruikers
    - Admin CRUD functionaliteit toegevoegd via admin-gedeelte
+   - sellers kunnen zeggen dat ze naar een event gaan (many to many)
 
 4. **Shops & Producten**
    - Lijst van shops
-   - Individuele shoppagina met producten als kaartjes
+   - Individuele shoppagina met producten als kaartjes en ee lijst van events waar de shopnaartoe gaat
    - Toevoegen van producten aan de shopping cart
    - Seller functies: `Edit Shop` en `Edit Products` zichtbaar bij ingelogde sellers
 
@@ -37,6 +40,7 @@ De website bevat tot nu toe de volgende onderdelen:
 6. **Profielpagina**
    - Eigen profiel aanpassen mogelijk: username, profielfoto, bio, verjaardag
    - Publieke profielpagina toegankelijk via `/users/{username}`
+   - publieke profiel toont verjaardag niet
 
 7. **FAQ – User Page**
    - Lijst van vragen en antwoorden uit de database
@@ -52,7 +56,7 @@ De website bevat tot nu toe de volgende onderdelen:
 
 9. **Contactpagina**
    - Formulier met velden: naam, e-mail, onderwerp, bericht
-   - Formulier “verstuurd” naar log (Mail driver: `log`) voor testing
+   - Formulier “verstuurd” naar admin@ehb.be voor testing (aanpasbaar in config/mail)
    - Server-side validatie en CSRF-bescherming aanwezig
 
 ---
@@ -61,7 +65,10 @@ De website bevat tot nu toe de volgende onderdelen:
 
 1. **Admin Dashboard**
    - Toont aantal users, shops en events
-   - Knop “Manage Users” naar `/admin/userManagement`  
+   - Knop “Manage news” naar `/admin/news`  
+   - Knop “Manage Events” naar `/admin/events` 
+   - Knop “Manage faq ” naar `/admin/faq` 
+   - Knop “Manage news” naar `/admin/userManagement`  
 
 2. **Manage Users**
    - Gebruikerslijst zichtbaar
@@ -117,11 +124,6 @@ Volg de onderstaande stappen om het project lokaal te draaien:
    cp .env.example .env
    ```
 
-3. Voor development kan de mail driver log blijven:
-   ```bash
-   MAIL_MAILER=log
-   ```
-
 4. Genereer de application key:
    ```bash
    php artisan key:generate
@@ -169,6 +171,3 @@ Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel 
 ## Opmerkingen / To-Do
 Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
 
-Many-to-many relaties nog op te zetten (technische vereiste)
-
-Eindtest en screencast/demo voorbereiden voor inlevering
