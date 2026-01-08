@@ -10,9 +10,7 @@ class PublicProfileController extends Controller
     public function show($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $newsPosts = $user->newsPosts()->latest()->get();
-
-        return view('users.show', compact('user', 'newsPosts'));
+        return view('public-profile.show', compact('user'));
     }
 
     public function edit()
