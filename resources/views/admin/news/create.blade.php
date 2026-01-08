@@ -28,8 +28,8 @@
                 </div>
 
                 <div>
-                    <label class="block font-medium mb-1" for='publication_date'>Publicatiedatum</label>
-                    <input class="border rounded p-2" id='publication_date' type="date" name="published_at" value="{{ old('published_at') }}">
+                    <label class="block font-medium mb-1" for='published_at'>Publicatiedatum</label>
+                    <input class="border rounded p-2" id='published_at' type="date" name="published_at" value="{{ old('published_at') }}">
                 </div>
 
                 <button class="px-5 py-2 bg-blue-600 text-white rounded">

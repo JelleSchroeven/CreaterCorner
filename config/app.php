@@ -53,6 +53,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'news_api_url' => env('NEWS_API_URL', 'http://localhost:3000/news'),
+
 
     /*
     |--------------------------------------------------------------------------

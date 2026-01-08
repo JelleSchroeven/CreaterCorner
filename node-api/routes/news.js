@@ -32,10 +32,31 @@ router.get('/:id', async (req, res) => {
 
 // Add news
 router.post('/', async (req, res) => {
-  const { title, content } = req.body;
-  if (!title || !content) return res.status(400).json({ error: 'Title and content are required' });
-  const [result] = await pool.query('INSERT INTO news (title, content) VALUES (?, ?)', [title, content]);
-  res.json({ id: result.insertId, title, content });
+  try {
+    const { title, content, published_at, user_id, image } = req.body;
+
+    if (!title || !content || !published_at || !user_id) {
+      return res.status(400).json({ error: 'Title, content, published_at and user_id are required' });
+    }
+
+    // Check user
+    const [userCheck] = await pool.query('SELECT id FROM users WHERE id = ?', [user_id]);
+    if (userCheck.length === 0) return res.status(400).json({ error: 'Ongeldige user_id' });
+
+    const now = new Date();
+    const [result] = await pool.query(
+      'INSERT INTO news (title, content, published_at, image, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [title, content, published_at || null, image || null, user_id, now, now]
+    );
+
+
+
+    const [rows] = await pool.query('SELECT * FROM news WHERE id = ?', [result.insertId]);
+    res.status(201).json({ data: rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Kon nieuws niet aanmaken', details: err.message });
+  }
 });
 
 // Update news
