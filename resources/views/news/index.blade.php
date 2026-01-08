@@ -6,33 +6,32 @@
     <div class="flex flex-col items-center mt-6 space-y-6">
         @foreach($news as $item)
             <div class="w-full max-w-[80%] bg-white shadow rounded p-6">
-                <h3 class="text-lg font-bold">{{ $item->title }}</h3>
+                <h3 class="text-lg font-bold">{{ $item['title'] }}</h3>
 
-                @if($item->image)
-                    <img src="{{ asset('storage/' . $item->image) }}" class="max-w-[450px] max-h-[300px] object-contain rounded" alt="{{ $item->title }}">
+                {{-- Alleen tonen als image bestaat --}}
+                @if(!empty($item['image']))
+                    <img src="{{ $item['image'] }}" class="max-w-[450px] max-h-[300px] object-contain rounded" alt="{{ $item['title'] }}">
                 @endif
 
                 <p class="text-sm text-gray-500 mt-2">
-                    {{ $item->published_at->format('d-m-Y') }}
+                    {{ \Carbon\Carbon::parse($item['created_at'])->format('d-m-Y') }}
                 </p>
 
-                <p class="mt-4">
-                    {{ Str::limit($item->content, 255) }}
-                </p>
+                <p class="mt-4">{{ \Illuminate\Support\Str::limit($item['content'], 255) }}</p>
 
-                <a class="text-blue-600 mt-4 inline-block"
-                   href="{{ route('news.show', $item) }}">
-                    Lees meer
-                </a>
+                <a class="text-blue-600 mt-4 inline-block" href="/news/{{ $item['id'] }}">Lees meer</a>
             </div>
-
-            @if(!$loop->last)
-                <div class="w-full max-w-[80%] border-t border-gray-300"></div>
-            @endif
         @endforeach
-
-        <div class="w-full max-w-[80%]">
-            {{ $news->links() }}
+    </div>
+    <div class="flex justify-center mt-6">
+        <div class="inline-flex bg-white shadow rounded-lg overflow-hidden">
+            @for($i = 1; $i <= $lastPage; $i++)
+                <a href="{{ url('/news?page=' . $i) }}"
+                class="px-4 py-2 border-r last:border-r-0 
+                        {{ $i == $currentPage ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    {{ $i }}
+                </a>
+            @endfor
         </div>
     </div>
 </x-app-layout>

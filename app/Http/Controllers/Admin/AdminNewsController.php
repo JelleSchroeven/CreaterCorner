@@ -6,13 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\News;    
+use Illuminate\Support\Facades\Http;
 
 class AdminNewsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $news = News::latest()->paginate(10);
-        return view('admin.news.index', compact('news'));
+        $page = $request->query('page', 1);
+
+        $response = Http::get('http://localhost:3000/news', [
+            'page' => $page,
+            'limit' => 10
+        ]);
+
+        $apiData = $response->json();
+
+        // data voor de Blade
+        $news = $apiData['data'];
+        $currentPage = $apiData['page'];
+        $lastPage = $apiData['last_page'];
+
+        return view('admin.news.index', compact('news', 'currentPage', 'lastPage'));
     }
 
     public function create()
