@@ -171,12 +171,12 @@ Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel 
 ## Opmerkingen / To-Do
 Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
 
-Node.js API — Project 2
-Overzicht
+# Node.js API — Project 2
+## Overzicht
 
-Dit project bevat naast de Laravel-website ook een volledig functionele REST API gebouwd met Node.js (v20+) en Express.
+- Dit project bevat naast de Laravel-website ook een volledig functionele REST API gebouwd met Node.js (v20+) en Express.
 
-Belangrijk:
+### Belangrijk:
 
 De API gebruikt dezelfde database als het Laravel-project.
 
@@ -184,37 +184,34 @@ De Laravel-website haalt bijvoorbeeld nieuwsitems via deze API op voor de News-p
 
 De API is database-driven, ondersteunt CRUD voor minstens twee entiteiten (users en news) en bevat server-side validatie, zoekfuncties en paginering.
 
-Starten van de API
+## Starten van de API
 
-Navigeer naar de API-map:
-
+1. Navigeer naar de API-map:
+```bash
 cd node-api
 npm install
 npm run dev   # of 'npm start'
+```
 
-
-De API draait standaard op:
+2. De API draait standaard op:
 
 http://localhost:3000
 
-API Documentatie
+## API Documentatie
 
 De root van de API toont een eenvoudige HTML-pagina met overzicht van alle endpoints:
 
 GET http://localhost:3000/
 
 
-Hier staan:
+### Hier staan:
 
-Users endpoints (CRUD, search, limit & offset)
+- Users endpoints (CRUD, search, limit & offset)
+- News endpoints (CRUD, search, pagination)
 
-News endpoints (CRUD, search, pagination)
-
-Daarnaast zijn er testpagina’s beschikbaar in public/:
-
-/user_crud_page.html → interactief testen van users endpoints
-
-/news_crud_page.html → interactief testen van news endpoints
+### Daarnaast zijn er testpagina’s beschikbaar in public/:
+- /user_crud_page.html → interactief testen van users endpoints
+- /news_crud_page.html → interactief testen van news endpoints
 
 Met deze pagina’s kan je direct GET, POST, PUT, DELETE en SEARCH requests uitvoeren vanuit de browser.
 
@@ -245,7 +242,7 @@ Interactiviteit via testpagina’s: alle CRUD-functionaliteiten kunnen direct ge
 
 Validatie: verplichte velden, numerieke velden en correcte user_id voor nieuwsitems
 
-Technische Details
+## Technische Details
 
 Node.js v20+
 
@@ -263,7 +260,7 @@ Regelmatige commits met duidelijke messages
 
 API wordt gebruikt door Laravel frontend voor het ophalen van nieuwsitems
 
-Projectstructuur
+## Projectstructuur
 project-root
 │
 ├── laravel-app/           # Laravel website
