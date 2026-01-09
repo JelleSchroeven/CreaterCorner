@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News API Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, textarea, button { margin: 5px; padding: 5px; width: 300px; }
+    textarea { height: 60px; }
+    .section { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; }
+    pre { background: #f0f0f0; padding: 10px; max-height: 300px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>News API Test</h1>
+
+  <!-- GET all news -->
+  <div class="section">
+    <h2>GET all news</h2>
+    <button onclick="getAllNews()">Get News</button>
+    <pre id="getAllResult"></pre>
+  </div>
+
+  <!-- GET news by ID -->
+  <div class="section">
+    <h2>GET news by ID</h2>
+    <input type="number" id="getId" placeholder="News ID" />
+    <button onclick="getNewsById()">Get News</button>
+    <pre id="getIdResult"></pre>
+  </div>
+
+  <!-- CREATE news -->
+  <div class="section">
+    <h2>CREATE new news item</h2>
+    <input id="postTitle" placeholder="Title" /><br/>
+    <textarea id="postContent" placeholder="Content"></textarea><br/>
+    <input id="postPublished" type="date" placeholder="Published date" /><br/>
+    <input id="postImage" placeholder="Image URL (optional)" /><br/>
+    <input id="postUserId" type="number" placeholder="User ID" /><br/>
+    <button onclick="createNews()">Create News</button>
+    <pre id="postResult"></pre>
+  </div>
+
+  <!-- UPDATE news -->
+  <div class="section">
+    <h2>UPDATE news item</h2>
+    <input id="putId" placeholder="News ID" /><br/>
+    <input id="putTitle" placeholder="Title" /><br/>
+    <textarea id="putContent" placeholder="Content"></textarea><br/>
+    <button onclick="updateNews()">Update News</button>
+    <pre id="putResult"></pre>
+  </div>
+
+  <!-- DELETE news -->
+  <div class="section">
+    <h2>DELETE news item</h2>
+    <input id="deleteId" placeholder="News ID" />
+    <button onclick="deleteNews()">Delete News</button>
+    <pre id="deleteResult"></pre>
+  </div>
+
+  <!-- SEARCH news -->
+  <div class="section">
+    <h2>SEARCH news</h2>
+    <input id="searchQuery" placeholder="Search term" />
+    <button onclick="searchNews()">Search</button>
+    <pre id="searchResult"></pre>
+  </div>
+
+  <script>
+    const baseURL = "http://localhost:3000/news";
+
+    async function getAllNews() {
+      const res = await fetch(baseURL);
+      const data = await res.json();
+      document.getElementById("getAllResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getNewsById() {
+      const id = document.getElementById("getId").value;
+      const res = await fetch(`${baseURL}/${id}`);
+      const data = await res.json();
+      document.getElementById("getIdResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function createNews() {
+      const data = {
+        title: document.getElementById("postTitle").value,
+        content: document.getElementById("postContent").value,
+        published_at: document.getElementById("postPublished").value,
+        image: document.getElementById("postImage").value || null,
+        user_id: parseInt(document.getElementById("postUserId").value)
+      };
+      const res = await fetch(baseURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById("postResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function updateNews() {
+      const id = document.getElementById("putId").value;
+      const data = {
+        title: document.getElementById("putTitle").value,
+        content: document.getElementById("putContent").value
+      };
+      const res = await fetch(`${baseURL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById("putResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function deleteNews() {
+      const id = document.getElementById("deleteId").value;
+      const res = await fetch(`${baseURL}/${id}`, { method: "DELETE" });
+      const result = await res.json();
+      document.getElementById("deleteResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function searchNews() {
+      const q = document.getElementById("searchQuery").value;
+      const res = await fetch(`${baseURL}/search?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      document.getElementById("searchResult").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>

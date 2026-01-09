@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users API Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { margin: 5px; padding: 5px; }
+    .section { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; }
+    pre { background: #f0f0f0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Users API Test</h1>
+
+  <!-- GET all users -->
+  <div class="section">
+    <h2>GET all users</h2>
+    <button onclick="getAllUsers()">Get Users</button>
+    <pre id="getAllResult"></pre>
+  </div>
+
+  <!-- GET user by ID -->
+  <div class="section">
+    <h2>GET user by ID</h2>
+    <input type="number" id="getId" placeholder="User ID" />
+    <button onclick="getUserById()">Get User</button>
+    <pre id="getIdResult"></pre>
+  </div>
+
+  <!-- POST create user -->
+  <div class="section">
+    <h2>CREATE new user</h2>
+    <input id="postName" placeholder="Name" />
+    <input id="postEmail" placeholder="Email" />
+    <input id="postRole" placeholder="Role" />
+    <input id="postUsername" placeholder="Username (optional)" />
+    <button onclick="createUser()">Create User</button>
+    <pre id="postResult"></pre>
+  </div>
+
+  <!-- PUT update user -->
+  <div class="section">
+    <h2>UPDATE user</h2>
+    <input id="putId" placeholder="User ID" />
+    <input id="putName" placeholder="Name" />
+    <input id="putEmail" placeholder="Email" />
+    <input id="putRole" placeholder="Role" />
+    <input id="putUsername" placeholder="Username (optional)" />
+    <button onclick="updateUser()">Update User</button>
+    <pre id="putResult"></pre>
+  </div>
+
+  <!-- DELETE user -->
+  <div class="section">
+    <h2>DELETE user</h2>
+    <input id="deleteId" placeholder="User ID" />
+    <button onclick="deleteUser()">Delete User</button>
+    <pre id="deleteResult"></pre>
+  </div>
+
+  <!-- SEARCH users -->
+  <div class="section">
+    <h2>SEARCH users</h2>
+    <input id="searchQuery" placeholder="Search term" />
+    <button onclick="searchUsers()">Search</button>
+    <pre id="searchResult"></pre>
+  </div>
+
+  <script>
+    const baseURL = "http://localhost:3000/users";
+
+    async function getAllUsers() {
+      const res = await fetch(baseURL);
+      const data = await res.json();
+      document.getElementById("getAllResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getUserById() {
+      const id = document.getElementById("getId").value;
+      const res = await fetch(`${baseURL}/${id}`);
+      const data = await res.json();
+      document.getElementById("getIdResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function createUser() {
+      const data = {
+        name: document.getElementById("postName").value,
+        email: document.getElementById("postEmail").value,
+        role: document.getElementById("postRole").value,
+        username: document.getElementById("postUsername").value || null
+      };
+      const res = await fetch(baseURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById("postResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function updateUser() {
+      const id = document.getElementById("putId").value;
+      const data = {
+        name: document.getElementById("putName").value,
+        email: document.getElementById("putEmail").value,
+        role: document.getElementById("putRole").value,
+        username: document.getElementById("putUsername").value || null
+      };
+      const res = await fetch(`${baseURL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById("putResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function deleteUser() {
+      const id = document.getElementById("deleteId").value;
+      const res = await fetch(`${baseURL}/${id}`, { method: "DELETE" });
+      const result = await res.json();
+      document.getElementById("deleteResult").textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function searchUsers() {
+      const q = document.getElementById("searchQuery").value;
+      const res = await fetch(`${baseURL}/search?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      document.getElementById("searchResult").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
