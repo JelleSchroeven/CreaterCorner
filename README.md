@@ -171,3 +171,107 @@ Componenten en layout ideeën gebaseerd op cursusmateriaal en standaard Laravel 
 ## Opmerkingen / To-Do
 Dashboard kan verder worden uitgebreid met overzichtswidgets/statistieken
 
+Node.js API — Project 2
+Overzicht
+
+Dit project bevat naast de Laravel-website ook een volledig functionele REST API gebouwd met Node.js (v20+) en Express.
+
+Belangrijk:
+
+De API gebruikt dezelfde database als het Laravel-project.
+
+De Laravel-website haalt bijvoorbeeld nieuwsitems via deze API op voor de News-pagina.
+
+De API is database-driven, ondersteunt CRUD voor minstens twee entiteiten (users en news) en bevat server-side validatie, zoekfuncties en paginering.
+
+Starten van de API
+
+Navigeer naar de API-map:
+
+cd node-api
+npm install
+npm run dev   # of 'npm start'
+
+
+De API draait standaard op:
+
+http://localhost:3000
+
+API Documentatie
+
+De root van de API toont een eenvoudige HTML-pagina met overzicht van alle endpoints:
+
+GET http://localhost:3000/
+
+
+Hier staan:
+
+Users endpoints (CRUD, search, limit & offset)
+
+News endpoints (CRUD, search, pagination)
+
+Daarnaast zijn er testpagina’s beschikbaar in public/:
+
+/user_crud_page.html → interactief testen van users endpoints
+
+/news_crud_page.html → interactief testen van news endpoints
+
+Met deze pagina’s kan je direct GET, POST, PUT, DELETE en SEARCH requests uitvoeren vanuit de browser.
+
+CRUD Endpoints
+Users
+Endpoint	Methode	Beschrijving
+/users	GET	Lijst van alle users (met limit & offset)
+/users/:id	GET	Haal een user op via ID
+/users	POST	Maak een nieuwe user
+/users/:id	PUT	Update een bestaande user
+/users/:id	DELETE	Verwijder een user
+/users/search?q=...	GET	Zoek users op naam, email of username
+News
+Endpoint	Methode	Beschrijving
+/news	GET	Lijst van nieuwsitems (paginatie ondersteund)
+/news/:id	GET	Haal een nieuwsitem op via ID
+/news	POST	Maak een nieuwsitem
+/news/:id	PUT	Update een nieuwsitem
+/news/:id	DELETE	Verwijder een nieuwsitem
+/news/search?q=...	GET	Zoek nieuwsitems op titel of content
+Extra Features
+
+Limit & offset bij users en news voor paginering
+
+Zoeken op gebruikersvelden (name, email, username) en nieuwsvelden (title, content)
+
+Interactiviteit via testpagina’s: alle CRUD-functionaliteiten kunnen direct getest worden in de browser
+
+Validatie: verplichte velden, numerieke velden en correcte user_id voor nieuwsitems
+
+Technische Details
+
+Node.js v20+
+
+Express
+
+MySQL database (gedeeld met Laravel-project)
+
+CORS ingeschakeld
+
+JSON body-parser (express.json())
+
+node_modules is toegevoegd aan .gitignore
+
+Regelmatige commits met duidelijke messages
+
+API wordt gebruikt door Laravel frontend voor het ophalen van nieuwsitems
+
+Projectstructuur
+project-root
+│
+├── laravel-app/           # Laravel website
+│
+└── node-api/              # Node.js API
+    ├── routes/            # Express routes
+    ├── controllers/       # Controller logica
+    ├── public/            # Testpagina’s voor endpoints
+    ├── db.js              # Database connectie
+    ├── package.json
+    └── README.md
